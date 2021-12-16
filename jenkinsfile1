@@ -1,0 +1,18 @@
+pipeline {
+    agent any
+     tools {
+        maven 'Maven'
+    }
+    stages {
+        stage('checkout source code') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'ffb3fbb2-6fe8-476a-ac9e-b222832ba692', url: 'https://github.com/sharad-tiwari/selenium_browser.git']]])
+            }
+        }
+        stage('test') {
+            steps {
+                sh 'mvn clean test'
+            }
+        }
+    }
+}
